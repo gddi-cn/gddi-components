@@ -15,7 +15,8 @@ export const BasicUsage = Template.bind({})
 BasicUsage.args = {
   width: 600,
   height: 600,
-  size: 1000,
+  channels: 8,
+  fpsPerChannel: 15,
   threeD: false,
   backgroundColor: '#edebeb',
 } as ModelSizeVizProps

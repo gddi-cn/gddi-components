@@ -2,18 +2,25 @@ import React, { useMemo, useRef, useEffect, useState } from 'react'
 import { ForceGraph3D, ForceGraph2D } from 'react-force-graph'
 import { genRandomTree } from './generateData'
 
+const distance = 2000
+
+const maxFpsPerChannel = 30
+const maxChannel = 32
+const fpsMin = 1
+const fpsMax = maxFpsPerChannel * maxChannel
+
 export interface ModelSizeVizProps {
-  size: number
+  channels: number
+  fpsPerChannel: number
   threeD?: boolean
   width?: number
   height?: number
   backgroundColor?: string
 }
 
-const distance = 2000
-
 export function ModelSizeViz({
-  size,
+  channels,
+  fpsPerChannel,
   threeD,
   width,
   height,
@@ -21,8 +28,12 @@ export function ModelSizeViz({
 }: ModelSizeVizProps): JSX.Element {
   const fgRef = useRef<any | undefined>()
   //   const [itv, setItv] = useState<NodeJS.Timer | undefined>(undefined)
+  const channels1 = (Math.floor(channels) % (maxChannel + 1)) + 1
+  const fpsPerChannel1 =
+    (Math.floor(fpsPerChannel) % (maxFpsPerChannel + 1)) + 1
+  const fps = channels1 * fpsPerChannel1
 
-  const numNodes = size < 0 ? 0 : size
+  const numNodes = fps
   const data = useMemo(() => genRandomTree(numNodes), [numNodes])
 
   //   useEffect(() => {
