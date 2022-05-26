@@ -1,4 +1,6 @@
-# A library holding some of GDDi's 'mysterious' components
+# gddi-components
+
+A library holding some of GDDi's 'mysterious' components
 
 - **Demo Page:** ...🚧
 
