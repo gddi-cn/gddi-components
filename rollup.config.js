@@ -30,7 +30,7 @@ export default [
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
       postcss(),
-      terser(),
+      terser({ compress: { drop_console: true } }),
       bundleSize()
     ],
     external: ['react', 'react-dom', 'styled-components', 'fabric'],

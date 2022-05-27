@@ -21,4 +21,5 @@ export type NodeObject = object & {
 export type LinkObject = object & {
   source?: string | number | NodeObject
   target?: string | number | NodeObject
+  colorId?: string | number
 }

@@ -1,40 +1,37 @@
 import React, { useMemo, useRef, useEffect, useState } from 'react'
-import { ForceGraph3D, ForceGraph2D } from 'react-force-graph'
-import { genRandomTree } from './generateData'
+import { ForceGraph3D } from 'react-force-graph'
+import { genNN, calModelSize } from './../../utils'
 
 const distance = 2000
 
-const maxFpsPerChannel = 30
-const maxChannel = 32
-const fpsMin = 1
-const fpsMax = maxFpsPerChannel * maxChannel
-
-export interface ModelSizeVizProps {
+export interface ModelSizeViz3DProps {
   channels: number
   fpsPerChannel: number
-  threeD?: boolean
   width?: number
   height?: number
   backgroundColor?: string
+  linkColor?: string
 }
 
-export function ModelSizeViz({
+export function ModelSizeViz3D({
   channels,
   fpsPerChannel,
-  threeD,
   width,
   height,
   backgroundColor,
-}: ModelSizeVizProps): JSX.Element {
+  linkColor,
+}: ModelSizeViz3DProps): JSX.Element {
   const fgRef = useRef<any | undefined>()
   //   const [itv, setItv] = useState<NodeJS.Timer | undefined>(undefined)
-  const channels1 = (Math.floor(channels) % (maxChannel + 1)) + 1
-  const fpsPerChannel1 =
-    (Math.floor(fpsPerChannel) % (maxFpsPerChannel + 1)) + 1
-  const fps = channels1 * fpsPerChannel1
-
-  const numNodes = fps
-  const data = useMemo(() => genRandomTree(numNodes), [numNodes])
+  const { layerWidth, numLayers } = useMemo(
+    () => calModelSize(channels, fpsPerChannel),
+    [channels, fpsPerChannel]
+  )
+  console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
+  const data = useMemo(
+    () => genNN(layerWidth, numLayers),
+    [layerWidth, numLayers]
+  )
 
   //   useEffect(() => {
   //     // console.log(fgRef.current)
@@ -68,35 +65,22 @@ export function ModelSizeViz({
     fgRef.current.cameraPosition({ z: distance })
   }
 
-  if (threeD) {
-    return (
-      <ForceGraph3D
-        ref={fgRef}
-        width={width}
-        height={height}
-        backgroundColor={backgroundColor}
-        graphData={data}
-        nodeLabel={(node: any) => `${node.nodeType}: ${node.description}`}
-        nodeAutoColorBy="nodeType"
-        nodeOpacity={1}
-        linkDirectionalParticles={1}
-        linkOpacity={1}
-        showNavInfo={false}
-        nodeRelSize={6}
-      />
-    )
-  }
-
   return (
-    <ForceGraph2D
+    <ForceGraph3D
+      ref={fgRef}
       width={width}
       height={height}
       backgroundColor={backgroundColor}
       graphData={data}
       nodeLabel={(node: any) => `${node.nodeType}: ${node.description}`}
       nodeAutoColorBy="nodeType"
-      linkDirectionalParticles={1}
+      nodeOpacity={1}
+      linkColor={() => (linkColor ? linkColor : `rgba(0, 0, 0, 0.08 )`)}
+      // linkDirectionalParticles={1}
+      linkOpacity={1}
+      showNavInfo={false}
       nodeRelSize={6}
+      enablePointerInteraction={false}
     />
   )
 }
