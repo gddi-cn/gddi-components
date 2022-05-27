@@ -11,6 +11,10 @@
   "author": "daisy.pang",
   "license": "MIT",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gddi-cn/gddi-components"
+  },
   "devDependencies": {
     "@babel/core": "^7.18.2",
     "@rollup/plugin-commonjs": "^22.0.0",
@@ -23,6 +27,7 @@
     "@storybook/builder-webpack4": "^6.5.5",
     "@storybook/manager-webpack4": "^6.5.5",
     "@storybook/react": "^6.5.5",
+    "@storybook/storybook-deployer": "^2.8.11",
     "@storybook/testing-library": "^0.0.11",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
@@ -47,24 +52,16 @@
     "react-dom": "^18.1.0",
     "react-force-graph": "^1.41.12",
     "rollup": "^2.74.1",
+    "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-terser": "^7.0.2",
     "sass-loader": "10.1.1",
     "style-loader": "2.0.0",
     "styled-components": "^5.3.5",
     "ts-jest": "^28.0.3",
     "typescript": "^4.7.2"
-  },
-  "scripts": {
-    "build": "rollup -c",
-    "sb": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
-    "build-sb": "build-storybook",
-    "serve-sb": "npx http-server ./storybook-static",
-    "test": "jest",
-    "publish-npm": "yarn publish --registry https://registry.npmjs.org",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.26.0",
@@ -78,5 +75,25 @@
     "prettier": "^2.6.2",
     "react": "16 || 17 || 18",
     "react-dom": "16 || 17 || 18"
+  },
+  "dependencies": {
+    "react-force-graph": "^1.41.12"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "sb": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
+    "build-sb": "build-storybook",
+    "serve-sb": "npx http-server ./storybook-static",
+    "test": "jest",
+    "publish-npm": "yarn publish --registry https://registry.npmjs.org",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook",
+    "serve-storybook": "npx http-server ./storybook-static",
+    "deploy-storybook": "storybook-to-ghpages --out=.out --remote=github-origin --source-branch=main"
+  },
+  "storybook-deployer": {
+    "gitUsername": "GH Pages Bot",
+    "gitEmail": "hello@ghbot.com",
+    "commitMessage": "Deploy Storybook to GitHub Pages"
   }
 }
