@@ -2,7 +2,7 @@
 
 A library holding some of GDDi's 'mysterious' components
 
-- **Demo Page:** ...🚧
+- Storybook Page: https://gddi-cn.github.io/gddi-components/
 
 ## Installation
 

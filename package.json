@@ -89,7 +89,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook",
     "serve-storybook": "npx http-server ./storybook-static",
-    "deploy-storybook": "storybook-to-ghpages --out=.out --remote=github-origin --source-branch=main"
+    "deploy-storybook": "storybook-to-ghpages --out=.out --remote=origin --source-branch=main"
   },
   "storybook-deployer": {
     "gitUsername": "GH Pages Bot",
