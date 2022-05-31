@@ -1,10 +1,32 @@
+const minFpsPerChannel = 1
 const maxFpsPerChannel = 30
+const minChannel = 1
 const maxChannel = 32
 const FPS_MAX = maxFpsPerChannel * maxChannel
 const MIN_LAYER_WIDTH = 100
 const MAX_LAYER_WIDTH = 350
 const MIN_NUM_LAYER = 4
 const MAX_NUM_LAYER = 8
+
+export function validateChannel(channels: number): number {
+  if (channels < minChannel) {
+    return minChannel
+  }
+  if (channels > maxChannel) {
+    return maxChannel
+  }
+  return channels
+}
+
+export function validateFPS(fps: number): number {
+  if (fps < minFpsPerChannel) {
+    return minFpsPerChannel
+  }
+  if (fps > maxFpsPerChannel) {
+    return maxFpsPerChannel
+  }
+  return fps
+}
 
 export function calNNSize(
   numChannels = 1,

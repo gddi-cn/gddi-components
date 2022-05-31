@@ -1,3 +1,25 @@
+export type VizGraphType = 'Network' | 'NN'
+
+export interface ModelSizeViz2DProps {
+  channels: number
+  fpsPerChannel: number
+  vizGraphType?: VizGraphType
+  width?: number
+  height?: number
+  backgroundColor?: string
+  linkColor?: string
+}
+
+export interface ModelSizeViz3DProps {
+  channels: number
+  fpsPerChannel: number
+  vizGraphType?: VizGraphType
+  width?: number
+  height?: number
+  backgroundColor?: string
+  linkColor?: string
+}
+
 export interface GraphData {
   nodes: NodeObject[]
   links: LinkObject[]

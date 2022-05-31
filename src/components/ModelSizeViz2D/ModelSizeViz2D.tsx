@@ -1,47 +1,25 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { ForceGraph2D } from 'react-force-graph'
-import { genNN, genNetwork, calNNSize, calNetworkSize } from './../../utils'
-
-export interface ModelSizeViz2DProps {
-  channels: number
-  fpsPerChannel: number
-  width?: number
-  height?: number
-  backgroundColor?: string
-  linkColor?: string
-}
+import { ModelSizeViz2DProps } from './../ModelSizeViz.types'
+import { useGraphData } from './../ModelSizeViz.hooks'
 
 export function ModelSizeViz2D({
   channels,
   fpsPerChannel,
+  vizGraphType,
   width,
   height,
   backgroundColor,
   linkColor,
 }: ModelSizeViz2DProps): JSX.Element {
-  // const { layerWidth, numLayers } = useMemo(
-  //   () => calNNSize(channels, fpsPerChannel),
-  //   [channels, fpsPerChannel]
-  // )
-  // console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
-  // const data = useMemo(
-  //   () => genNN(layerWidth, numLayers),
-  //   [layerWidth, numLayers]
-  // )
-
-  const N = useMemo(
-    () => calNetworkSize(channels, fpsPerChannel),
-    [channels, fpsPerChannel]
-  )
-  console.log(`N: ${N}`)
-  const data = useMemo(() => genNetwork(N), [N])
+  const graphData = useGraphData(vizGraphType, channels, fpsPerChannel)
 
   return (
     <ForceGraph2D
       width={width}
       height={height}
       backgroundColor={backgroundColor}
-      graphData={data}
+      graphData={graphData}
       d3AlphaDecay={0}
       d3VelocityDecay={0.08}
       cooldownTime={6000}

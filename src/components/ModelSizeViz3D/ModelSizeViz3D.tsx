@@ -1,34 +1,18 @@
-import React, { useMemo, useRef, useEffect, useState } from 'react'
+import React from 'react'
 import { ForceGraph3D } from 'react-force-graph'
-import { genNN, calNNSize } from './../../utils'
-
-export interface ModelSizeViz3DProps {
-  channels: number
-  fpsPerChannel: number
-  width?: number
-  height?: number
-  backgroundColor?: string
-  linkColor?: string
-}
+import { ModelSizeViz3DProps } from './../ModelSizeViz.types'
+import { useGraphData } from './../ModelSizeViz.hooks'
 
 export function ModelSizeViz3D({
   channels,
   fpsPerChannel,
+  vizGraphType,
   width,
   height,
   backgroundColor,
   linkColor,
 }: ModelSizeViz3DProps): JSX.Element {
-  // const fgRef = useRef<any | undefined>()
-  const { layerWidth, numLayers } = useMemo(
-    () => calNNSize(channels, fpsPerChannel),
-    [channels, fpsPerChannel]
-  )
-  console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
-  const data = useMemo(
-    () => genNN(layerWidth, numLayers),
-    [layerWidth, numLayers]
-  )
+  const graphData = useGraphData(vizGraphType, channels, fpsPerChannel)
 
   return (
     <ForceGraph3D
@@ -36,7 +20,7 @@ export function ModelSizeViz3D({
       width={width}
       height={height}
       backgroundColor={backgroundColor}
-      graphData={data}
+      graphData={graphData}
       nodeLabel={(node: any) => `${node.nodeType}: ${node.description}`}
       nodeAutoColorBy="nodeType"
       nodeOpacity={1}

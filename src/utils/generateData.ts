@@ -1,4 +1,4 @@
-import { GraphData, NodeObject } from './graphData.types'
+import { GraphData, NodeObject } from './../components/ModelSizeViz.types'
 
 export function generateRandomGraph(
   numNodes: number,
