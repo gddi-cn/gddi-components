@@ -74,8 +74,8 @@ export function genNetwork(N = 300): GraphData {
   const res: GraphData = {
     nodes: new Array(N).fill(0).map((val, idx) => ({
       id: idx,
-      nodeType: idx % 8,
-      description: `nodeId - ${idx}`,
+      nodeType: 1,
+      description: `neuron`,
     })),
     links: [],
   }

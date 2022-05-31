@@ -6,29 +6,7 @@ const MAX_LAYER_WIDTH = 350
 const MIN_NUM_LAYER = 4
 const MAX_NUM_LAYER = 8
 
-// export function calModelSize(
-//   numChannels = 1,
-//   fpsPerChannel = 1
-// ): { layerWidth: number; numLayers: number } {
-//   //   const numBins = Math.floor(fpsMax / 50)
-//   const fps = numChannels * fpsPerChannel
-//   const fpsRemain = FPS_MAX - fps
-
-//   const layerWidth =
-//     MIN_LAYER_WIDTH +
-//     Math.floor((MAX_LAYER_WIDTH - MIN_LAYER_WIDTH) * (fpsRemain / FPS_MAX))
-//   const numLayers =
-//     Math.floor(
-//       fpsRemain / Math.floor(FPS_MAX / (MAX_NUM_LAYER - MIN_NUM_LAYER + 1))
-//     ) + MIN_NUM_LAYER
-
-//   return {
-//     layerWidth,
-//     numLayers,
-//   }
-// }
-
-export function calModelSize(
+export function calNNSize(
   numChannels = 1,
   fpsPerChannel = 1
 ): { layerWidth: number; numLayers: number } {
@@ -53,4 +31,14 @@ export function calModelSize(
     layerWidth,
     numLayers,
   }
+}
+
+const MAX_NETWORK_N = 1800
+const MIN_NETWORK_N = 60
+
+export function calNetworkSize(numChannels = 1, fpsPerChannel = 1): number {
+  const k = (MIN_NETWORK_N - MAX_NETWORK_N) / (FPS_MAX - 1)
+  const b = MAX_NETWORK_N - k
+  const fps = numChannels * fpsPerChannel
+  return Math.floor(k * fps + b)
 }

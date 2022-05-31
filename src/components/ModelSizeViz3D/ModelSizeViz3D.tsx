@@ -1,8 +1,6 @@
 import React, { useMemo, useRef, useEffect, useState } from 'react'
 import { ForceGraph3D } from 'react-force-graph'
-import { genNN, calModelSize } from './../../utils'
-
-const distance = 2000
+import { genNN, calNNSize } from './../../utils'
 
 export interface ModelSizeViz3DProps {
   channels: number
@@ -21,10 +19,9 @@ export function ModelSizeViz3D({
   backgroundColor,
   linkColor,
 }: ModelSizeViz3DProps): JSX.Element {
-  const fgRef = useRef<any | undefined>()
-  //   const [itv, setItv] = useState<NodeJS.Timer | undefined>(undefined)
+  // const fgRef = useRef<any | undefined>()
   const { layerWidth, numLayers } = useMemo(
-    () => calModelSize(channels, fpsPerChannel),
+    () => calNNSize(channels, fpsPerChannel),
     [channels, fpsPerChannel]
   )
   console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
@@ -33,41 +30,9 @@ export function ModelSizeViz3D({
     [layerWidth, numLayers]
   )
 
-  //   useEffect(() => {
-  //     // console.log(fgRef.current)
-  //     if (threeD && camOrbitting && fgRef.current && itv === undefined) {
-  //       console.log('🍉🍉set interval!')
-  //       let angle = 0
-  //       setItv(
-  //         setInterval(() => {
-  //           fgRef.current.cameraPosition({
-  //             x: distance * Math.sin(angle),
-  //             z: distance * Math.cos(angle),
-  //           })
-  //           angle += Math.PI / 300
-  //         }, 10)
-  //       )
-  //     }
-
-  //     return () => {
-  //       console.log(`camOrbitting: ${camOrbitting}`)
-  //       console.log(`itv: ${itv}`)
-  //       console.log(`(!threeD || !camOrbitting): ${!threeD || !camOrbitting}`)
-  //       if (itv !== undefined && (!threeD || !camOrbitting)) {
-  //         console.log('!!!!!clear interval!')
-  //         clearInterval(itv)
-  //         setItv(undefined)
-  //       }
-  //     }
-  //   }, [camOrbitting, threeD, setItv, itv])
-
-  if (fgRef.current) {
-    fgRef.current.cameraPosition({ z: distance })
-  }
-
   return (
     <ForceGraph3D
-      ref={fgRef}
+      // ref={fgRef}
       width={width}
       height={height}
       backgroundColor={backgroundColor}

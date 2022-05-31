@@ -1,8 +1,6 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { ForceGraph2D } from 'react-force-graph'
-import { genNN, calModelSize } from './../../utils'
-
-const distance = 4000
+import { genNN, genNetwork, calNNSize, calNetworkSize } from './../../utils'
 
 export interface ModelSizeViz2DProps {
   channels: number
@@ -21,15 +19,22 @@ export function ModelSizeViz2D({
   backgroundColor,
   linkColor,
 }: ModelSizeViz2DProps): JSX.Element {
-  const { layerWidth, numLayers } = useMemo(
-    () => calModelSize(channels, fpsPerChannel),
+  // const { layerWidth, numLayers } = useMemo(
+  //   () => calNNSize(channels, fpsPerChannel),
+  //   [channels, fpsPerChannel]
+  // )
+  // console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
+  // const data = useMemo(
+  //   () => genNN(layerWidth, numLayers),
+  //   [layerWidth, numLayers]
+  // )
+
+  const N = useMemo(
+    () => calNetworkSize(channels, fpsPerChannel),
     [channels, fpsPerChannel]
   )
-  console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
-  const data = useMemo(
-    () => genNN(layerWidth, numLayers),
-    [layerWidth, numLayers]
-  )
+  console.log(`N: ${N}`)
+  const data = useMemo(() => genNetwork(N), [N])
 
   return (
     <ForceGraph2D
