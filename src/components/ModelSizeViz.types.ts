@@ -28,6 +28,11 @@ export interface ModelSizeViz2DProps {
    * @param {number} fpsPerChannel FPS per channel (min = 1, max = 30)
    */
   calNetworksize?: CalNetworkSizeFunc
+  /**
+   * The 2 types of graph shapes you can chosse from.
+   * 'NN' -- neural network with layers; relatively large; default;
+   * 'Network' -- random network; relatively small;
+   */
   vizGraphType?: VizGraphType
   width?: number
   height?: number
@@ -53,6 +58,11 @@ export interface ModelSizeViz3DProps {
    * @param {number} fpsPerChannel FPS per channel (min = 1, max = 30)
    */
   calNetworksize?: CalNetworkSizeFunc
+  /**
+   * The 2 types of graph shapes you can chosse from.
+   * 'NN' -- neural network with layers; relatively large; default;
+   * 'Network' -- random network; relatively small;
+   */
   vizGraphType?: VizGraphType
   width?: number
   height?: number
