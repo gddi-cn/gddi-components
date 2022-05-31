@@ -1,7 +1,11 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 
-import { ModelSizeViz2D, ModelSizeViz2DProps } from './../components'
+import {
+  ModelSizeViz2D,
+  ModelSizeViz2DProps,
+  CalNNSizeFunc,
+} from './../components'
 
 export default {
   title: 'Example/ModelSizeViz2D',
@@ -17,14 +21,33 @@ const Template: Story<ModelSizeViz2DProps> = (args) => (
 )
 
 const calNetworkSizeFunc = (c: number, f: number): number => {
-  return 200
+  const MIN_NETWORK_N = 30
+  const MAX_NETWORK_N = 600
+  const FPS_MAX = 30 * 32
+  const k = (MIN_NETWORK_N - MAX_NETWORK_N) / (FPS_MAX - 1)
+  const b = MAX_NETWORK_N - k
+  const fps = c * f
+  return Math.floor(k * fps + b)
 }
 
-const calNNSizeFunc = (c: number, f: number) => {
-  return {
-    layerWidth: 300,
-    numLayers: 6,
-  }
+export const calNNSizeFunc: CalNNSizeFunc = (
+  numChannels: number,
+  fpsPerChannel: number
+) => {
+  const FPS_MAX = 30 * 32
+  const MIN_LAYER_WIDTH = 80
+  const MAX_LAYER_WIDTH = 300
+  const MIN_NUM_LAYER = 4
+  const MAX_NUM_LAYER = 7
+
+  const fps = numChannels * fpsPerChannel
+  const kL = (MIN_NUM_LAYER - MAX_NUM_LAYER) / (FPS_MAX - 1)
+  const bL = MAX_NUM_LAYER - kL
+  const kW = (MIN_LAYER_WIDTH - MAX_LAYER_WIDTH) / (FPS_MAX - 1)
+  const bW = MAX_LAYER_WIDTH - kW
+  const numLayers = Math.round(kL * fps + bL)
+  const layerWidth = Math.round(kW * fps + bW)
+  return { layerWidth, numLayers }
 }
 
 export const BasicUsage = Template.bind({})
