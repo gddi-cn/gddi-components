@@ -1,5 +1,10 @@
 import { useMemo } from 'react'
-import { VizGraphType, GraphData } from './ModelSizeViz.types'
+import {
+  VizGraphType,
+  GraphData,
+  CalNetworkSizeFunc,
+  CalNNSizeFunc,
+} from './ModelSizeViz.types'
 import {
   genNN,
   genNetwork,
@@ -12,21 +17,31 @@ import {
 export function useGraphData(
   vizGraphType: VizGraphType | undefined,
   channels: number,
-  fpsPerChannel: number
+  fpsPerChannel: number,
+  calNetworkSize1?: CalNetworkSizeFunc,
+  calNNSize1?: CalNNSizeFunc
 ): GraphData {
   const graphData = useMemo(() => {
     const channels1 = validateChannel(channels)
     const fpsPerChannel1 = validateFPS(fpsPerChannel)
     if (vizGraphType === 'NN') {
-      const { layerWidth, numLayers } = calNNSize(channels1, fpsPerChannel1)
+      let myCalNNSize = calNNSize
+      if (calNNSize1) {
+        myCalNNSize = calNNSize1
+      }
+      const { layerWidth, numLayers } = myCalNNSize(channels1, fpsPerChannel1)
       console.log(`layerWidth: ${layerWidth} - numLayers: ${numLayers}`)
       return genNN(layerWidth, numLayers)
     } else {
-      const N = calNetworkSize(channels1, fpsPerChannel1)
+      let myCalNetworkSize = calNetworkSize
+      if (calNetworkSize1) {
+        myCalNetworkSize = calNetworkSize1
+      }
+      const N = myCalNetworkSize(channels1, fpsPerChannel1)
       console.log(`N: ${N}`)
       return genNetwork(N)
     }
-  }, [channels, fpsPerChannel, vizGraphType])
+  }, [channels, fpsPerChannel, vizGraphType, calNetworkSize1, calNNSize1])
 
   return graphData
 }

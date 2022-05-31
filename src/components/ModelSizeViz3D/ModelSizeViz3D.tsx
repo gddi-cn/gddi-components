@@ -6,13 +6,21 @@ import { useGraphData } from './../ModelSizeViz.hooks'
 export function ModelSizeViz3D({
   channels,
   fpsPerChannel,
+  calNNSize,
+  calNetworksize,
   vizGraphType,
   width,
   height,
   backgroundColor,
   linkColor,
 }: ModelSizeViz3DProps): JSX.Element {
-  const graphData = useGraphData(vizGraphType, channels, fpsPerChannel)
+  const graphData = useGraphData(
+    vizGraphType,
+    channels,
+    fpsPerChannel,
+    calNetworksize,
+    calNNSize
+  )
 
   return (
     <ForceGraph3D

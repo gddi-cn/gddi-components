@@ -1,8 +1,33 @@
 export type VizGraphType = 'Network' | 'NN'
 
+export type CalNNSizeFunc = (
+  numChannels: number,
+  fpsPerChannel: number
+) => { layerWidth: number; numLayers: number }
+
+export type CalNetworkSizeFunc = (
+  numChannels: number,
+  fpsPerChannel: number
+) => number
+
 export interface ModelSizeViz2DProps {
   channels: number
   fpsPerChannel: number
+  /**
+   * The function to calculate the NN size based on inputs.
+   * @returns layerWidth - the max number of nodes in all layers. numLayers -
+   *  numLayers - number of layers.
+   * @param {number} channels Number of channels (min = 1, max = 32)
+   * @param {number} fpsPerChannel FPS per channel (min = 1, max = 30)
+   */
+  calNNSize?: CalNNSizeFunc
+  /**
+   * The function to calculate the network size based on inputs.
+   * Returns the number of nodes in the network.
+   * @param {number} channels Number of channels (min = 1, max = 32)
+   * @param {number} fpsPerChannel FPS per channel (min = 1, max = 30)
+   */
+  calNetworksize?: CalNetworkSizeFunc
   vizGraphType?: VizGraphType
   width?: number
   height?: number
@@ -13,6 +38,21 @@ export interface ModelSizeViz2DProps {
 export interface ModelSizeViz3DProps {
   channels: number
   fpsPerChannel: number
+  /**
+   * The function to calculate the NN size based on inputs.
+   * @returns layerWidth - the max number of nodes in all layers. numLayers -
+   *  numLayers - number of layers.
+   * @param {number} channels Number of channels (min = 1, max = 32)
+   * @param {number} fpsPerChannel FPS per channel (min = 1, max = 30)
+   */
+  calNNSize?: CalNNSizeFunc
+  /**
+   * The function to calculate the network size based on inputs.
+   * Returns the number of nodes in the network.
+   * @param {number} channels Number of channels (min = 1, max = 32)
+   * @param {number} fpsPerChannel FPS per channel (min = 1, max = 30)
+   */
+  calNetworksize?: CalNetworkSizeFunc
   vizGraphType?: VizGraphType
   width?: number
   height?: number

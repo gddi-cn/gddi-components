@@ -1,3 +1,5 @@
+import { CalNNSizeFunc, CalNetworkSizeFunc } from '../components'
+
 const minFpsPerChannel = 1
 const maxFpsPerChannel = 30
 const minChannel = 1
@@ -28,10 +30,10 @@ export function validateFPS(fps: number): number {
   return fps
 }
 
-export function calNNSize(
+export const calNNSize: CalNNSizeFunc = (
   numChannels = 1,
   fpsPerChannel = 1
-): { layerWidth: number; numLayers: number } {
+) => {
   const fps = numChannels * fpsPerChannel
   const widthBinSize = 10
   const widthBinCnt = Math.floor(
@@ -58,7 +60,10 @@ export function calNNSize(
 const MAX_NETWORK_N = 1800
 const MIN_NETWORK_N = 60
 
-export function calNetworkSize(numChannels = 1, fpsPerChannel = 1): number {
+export const calNetworkSize: CalNetworkSizeFunc = (
+  numChannels = 1,
+  fpsPerChannel = 1
+) => {
   const k = (MIN_NETWORK_N - MAX_NETWORK_N) / (FPS_MAX - 1)
   const b = MAX_NETWORK_N - k
   const fps = numChannels * fpsPerChannel

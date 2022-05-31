@@ -16,6 +16,17 @@ const Template: Story<ModelSizeViz2DProps> = (args) => (
   <ModelSizeViz2D {...args} />
 )
 
+const calNetworkSizeFunc = (c: number, f: number): number => {
+  return 200
+}
+
+const calNNSizeFunc = (c: number, f: number) => {
+  return {
+    layerWidth: 300,
+    numLayers: 6,
+  }
+}
+
 export const BasicUsage = Template.bind({})
 BasicUsage.args = {
   width: 600,
@@ -24,6 +35,8 @@ BasicUsage.args = {
   fpsPerChannel: 15,
   backgroundColor: '#ffffff',
   linkColor: undefined,
+  calNetworksize: calNetworkSizeFunc,
+  calNNSize: calNNSizeFunc,
 } as ModelSizeViz2DProps
 
 BasicUsage.storyName = 'ModelSizeViz2D'
