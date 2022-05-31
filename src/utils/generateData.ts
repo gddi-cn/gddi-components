@@ -94,7 +94,7 @@ export function genNetwork(N = 300): GraphData {
 export function genNN1(maxWidth = 200, numLayers = 6): GraphData {
   const minRatio = 0.6
   const firstNode = {
-    id: crypto.randomUUID(),
+    id: self.crypto.randomUUID(),
     nodeType: 0,
     description: `neuron`,
   }
@@ -124,7 +124,7 @@ export function genNN1(maxWidth = 200, numLayers = 6): GraphData {
     }
     layerNodes.push(
       new Array(curWidth).fill(0).map(() => ({
-        id: crypto.randomUUID(),
+        id: self.crypto.randomUUID(),
         // nodeType: layerType,
         nodeType: l === numLayers ? 1 : -1,
         description: `neuron`,
@@ -188,7 +188,7 @@ export function genNN(maxWidth = 200, numLayers = 6): GraphData {
     }
     layerNodes.push(
       new Array(curWidth).fill(0).map(() => ({
-        id: crypto.randomUUID(),
+        id: self.crypto.randomUUID(),
         nodeType: layerType,
         description: `neuron`,
       }))
