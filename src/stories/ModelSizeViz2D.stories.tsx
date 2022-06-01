@@ -30,7 +30,7 @@ const calNetworkSizeFunc = (c: number, f: number): number => {
   return Math.floor(k * fps + b)
 }
 
-export const calNNSizeFunc: CalNNSizeFunc = (
+const calNNSizeFunc: CalNNSizeFunc = (
   numChannels: number,
   fpsPerChannel: number
 ) => {
